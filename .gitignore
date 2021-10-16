@@ -9,7 +9,9 @@ store/__pycache__/
 account/migrations/__pycache__/
 basket/migrations/__pycache__/
 orders/migrations/__pycache__/
-payment/migrations/__pycache__
-store/migrations/__pycache__
+payment/migrations/__pycache__/
+store/migrations/__pycache__/
 
 config/.env
+
+pypaystack/__pycache__/

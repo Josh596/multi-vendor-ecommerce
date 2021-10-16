@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
 from django.conf import settings
 
-from pypaystack import Transaction, Customer
+from pypaystack import Transaction
 
 from basket.basket import Basket
 from orders.models import Order

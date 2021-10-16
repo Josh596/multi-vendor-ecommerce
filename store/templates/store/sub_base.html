@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block script %}
+<script>
+    window.onload = () => {
+        var active_product_id  //Either pally form or single pay form
+        var pay_single = true;
+        $("input[type='number']").inputSpinner();
+        var orderModal = document.getElementById('orderModal');
+        orderModal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            var button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            active_product_id = button.getAttribute('data-product')
+            document.getElementById('order-quantity').value = 1
+            // If necessary, you could initiate an AJAX request here
+            // and then do the updating in a callback.
+            //
+            // Update the modal's content.
+
+        })
+
+        function orderSuccess() {
+            $('#closeOrderModal').click()
+            $('#orderSuccessModal').modal('show');
+        }
+
+        $(document).on('click', '#addtocart-button', function (e) {
+            e.preventDefault();
+            btn = e.target
+            product_id = btn.getAttribute('data-product')
+            $.ajax({
+                type: 'POST',
+                url: '{% url "basket:basket_add" %}',
+                data: {
+                    productid: active_product_id,
+                    productqty: $('#order-quantity').val(),
+                    csrfmiddlewaretoken: "{{csrf_token}}",
+                    action: 'post'
+                },
+                success: function (json) {
+                    orderSuccess()
+                    document.getElementById("basket-qty").innerHTML = json.qty
+                },
+                error: function (xhr, errmsg, err) { }
+            });
+
+
+
+        })
+
+    }
+</script>
+{% endblock %}

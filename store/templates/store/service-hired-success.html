@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Service Request{% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="col-12 col-lg-6">
+    <h3 class="mb-4"> Hire Request has been Successfully Sent</h3>
+    <a href="{% url "account:dashboard" %}">Go to Dashboard</a>
+  </div>     
+</div>
+
+{% endblock %}

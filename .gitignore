@@ -1,0 +1,15 @@
+env/
+account/__pycache__/
+basket/__pycache__/
+config/__pycache__/
+orders/__pycache__/
+payment/__pycache__/
+store/__pycache__/
+
+account/migrations/__pycache__/
+basket/migrations/__pycache__/
+orders/migrations/__pycache__/
+payment/migrations/__pycache__
+store/migrations/__pycache__
+
+config/.env

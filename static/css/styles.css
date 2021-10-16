@@ -1,0 +1,30 @@
+body,html {
+    font-family: 'Poppins', 'Courier New', Courier, monospace;
+    font-size: 14px;
+    color: black;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    padding-top: 120px;
+}
+
+button {
+    background-color: #4D25E0 !important;
+    color: #ffff !important;
+}
+
+.vendor-btn{
+    background-color: black;
+    border-radius: 2px;
+    box-shadow: 2px -1px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 2px -1px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px -1px 5px 0px rgba(0,0,0,0.75);
+}
+
+@media (max-width: 979px) {
+    body {
+        padding-top: 0px;
+    }
+}

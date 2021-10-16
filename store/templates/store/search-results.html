@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="row container">
+    <div class="row container">
+        <span>
+            <h2>Products</h2>
+        </span>
+        <hr>
+        <div class="d-flex flex-wrap" style="gap: 10px;">
+            {% for product in products %}
+            <div class="card w-25">
+                <img src="{{product.image.url}}" class="card-img-top" alt="{{product.title}}">
+                <div class="card-body">
+                    <h5 class="card-title" style="font-weight: 500px; color: #0000; line-height: 21px;"><a
+                            style="text-decoration: none; font-weight: 500; color:black; line-height: 21px;"
+                            href="{{ product.get_absolute_url }}">{{product.title }}</a></h5>
+                    <p class="card-text me-auto">&#8358; {{ product.price }}</p>
+                    <div class="d-flex justify-content-end">
+                        <a href="#" class="btn btn-primary addtocart-button" data-product={{product.id}}>Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <span>No product found matching the query...</span>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <div class="row container">
+        <span>
+            <h2>Services</h2>
+        </span>
+        <hr>
+        <div class="d-flex flex-wrap" style="gap: 10px;">
+            {% for service in services %}
+            <div class="card w-25">
+                <img src="{{service.image.url}}" class="card-img-top" alt="{{product.title}}">
+                <div class="card-body">
+                    <h5 class="card-title" style="font-weight: 500px; color: #0000; line-height: 21px;"><a
+                            style="text-decoration: none; font-weight: 500; color:black; line-height: 21px;"
+                            href="{{ service.get_absolute_url }}">{{service.title }}</a></h5>
+                    <p class="card-text me-auto">&#8358;{{ service.min_price }} - &#8358;{{ service.max_price }}</p>
+                    <div class="d-flex justify-content-end">
+                        <a href="#" class="btn btn-primary">Hire</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <span>No service found matching the query.</span>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Modals -->
+<!-- Order Success Modal -->
+<div id="orderSuccessModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <div class="icon-box">
+                    <i style="font-size: 36px;" class="bi bi-check2"></i>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <h4>Great!</h4>	
+                <p>Item(s) has been added to your cart.</p>
+            </div>
+        </div>
+        <div class="modal-footer" style="display: block;">
+            <button type="button" class="btn btn-secondary" id="closeSuccessModal" style="display: block; width: 100%;" data-bs-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Hire Request Modal -->
+<div class="modal fade" id="hireRequestModal" tabindex="-1" aria-labelledby="hireRequestModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="hireRequestModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="d-flex flex-wrap" id="modal-details-form" method="POST" action="{% url 'store:hire' %}">
+                    {% csrf_token %}
+                    <h4>Information for the Vendor to Contact you</h4>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="modal-username">Username</span>
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Email"
+                            aria-describedby="modal-username" name="username" value="{{user.user_name}}">
+                    </div>
+                
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="modal-email-address">Email</span>
+                        <input type="text" class="form-control" placeholder="Email" aria-label="Email"
+                            aria-describedby="modal-email-address" name="email-address" value="{{user.email}}">
+                    </div>
+                
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="modal-phone-number">Phone Number</span>
+                        <input type="text" class="form-control" placeholder="Phone number" aria-label="Phone number" name="phone-number"
+                            value="{{user.phone_number}}" aria-describedby="modal-phone-number" required>
+                    </div>
+                
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="modal-address">Address</span>
+                        <input type="text" class="form-control" placeholder="Address" aria-label="Address" name="address"
+                            value="{{user.address_line_1 }}" aria-describedby="modal-phone-number">
+                    </div>
+                
+                    <input type="hidden" name="service_id" id="service_id_input_hidden">
+                
+                    <small>Please be sure to enter valid details</small>
+                
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="modal-details-form" class="btn btn-primary">Hire</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+    window.onload = () => {
+
+        $("input[type='number']").inputSpinner();
+
+
+        function orderSuccess() {
+            $('#closeOrderModal').click()
+            $('#orderSuccessModal').modal('show');
+        }
+
+        $(document).on('click', '.addtocart-button', function (e) {
+            e.preventDefault();
+            btn = e.target
+            product_id = btn.getAttribute('data-product')
+            $.ajax({
+                type: 'POST',
+                url: '{% url "basket:basket_add" %}',
+                data: {
+                    productid: product_id,
+                    productqty: 1,
+                    csrfmiddlewaretoken: "{{csrf_token}}",
+                    action: 'post'
+                },
+                success: function (json) {
+                    orderSuccess()
+                    document.getElementById("basket-qty").innerHTML = json.qty
+                },
+                error: function (xhr, errmsg, err) { }
+            });
+
+
+
+        })
+
+    }
+
+
+    var hire_request_modal = document.getElementById('hireRequestModal')
+    hire_request_modal.addEventListener('show.bs.modal', function (event) {
+        document.getElementById("service_id_input_hidden").value = event.relatedTarget.getAttribute('data-service');
+
+    })
+
+</script>
+{% endblock %}

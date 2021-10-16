@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'store:index' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{category.name}}</li>
+        </ol>
+    </nav>
+
+    {% include 'store/topbar.html' %}
+
+    
+    <div class="d-flex flex-wrap" style="gap: 10px;">
+        {% for product in products %}
+        <div class="card w-25">
+            <img src="{{product.image.url}}" class="card-img-top" alt="{{product.title}}">
+            <div class="card-body">
+                <h5 class="card-title" style="font-weight: 500px; color: #0000; line-height: 21px;"><a
+                        style="text-decoration: none; font-weight: 500; color:black; line-height: 21px;"
+                        href="{{ product.get_absolute_url }}">{{product.title }}</a></h5>
+                <p class="card-text me-auto">&#8358; {{ product.price }}</p>
+                <div class="d-flex justify-content-end">
+                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <span>No products in this category yet...</span>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

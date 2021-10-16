@@ -1,0 +1,25 @@
+html,
+body {
+    background: linear-gradient(180deg, #BA9DFF 0%, #FFDDFA 100%), #FFFFFF;
+    background-blend-mode: normal, darken;
+}
+
+.account-form {
+    background: #EFE8FF;
+    box-shadow: 2px 2px 2px rgb(0 0 0 / 25%);
+    border-radius: 10px;
+}
+
+.account-form input{
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.account-form input {
+    border: 2px solid #ccc;
+    height: calc(2em + .75rem + 2px);
+}
+
+.account-form input:focus {
+    border-color: #1497ff;
+    box-shadow: none;
+}

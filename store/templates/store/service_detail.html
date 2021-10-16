@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Service{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    {% include 'store/topbar_service.html' %}
+
+    <div class="row">
+        <div class="col-auto">
+            <div class="simple-gallery">
+                <img class="service-image" src="{{service.image.url}}">
+            </div>
+
+
+        </div>
+
+        <div class="col">
+            <div>
+                <small>Item #{{service.id}}</small>
+                <div class="row">
+                    <div class="col-auto">
+                        <h4 class="heading" style="font-weight: 800;">{{service.title}}</h4>
+                        <h4 class="mb-3 mt-1 price">&#8358;{{ service.min_price }} - &#8358;{{ service.max_price }}</h4>
+
+                    </div>
+                </div>
+                <hr>
+
+                <div class="row">
+                    <span class="service-categories">
+                        Categories:
+                        {% for category in service.categories.all %}
+                        <a class="categories" href="{{ category.get_absolute_url }}">{{category.name}}</a>
+                        {% endfor %}
+                    </span>
+                </div>
+                <div class="row w-50">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#hireRequestModal"
+                        data-service="{{service.id}}">Hire</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row pt-4">
+        <h5 style="font-weight: 800;">Description</h5>
+        <p class="service-description">
+            {{service.description}}...
+        </p>
+    </div>
+</div>
+
+
+<!-- Modals -->
+
+<!-- Modal -->
+<div class="modal fade" id="hireRequestModal" tabindex="-1" aria-labelledby="hireRequestModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="hireRequestModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="d-flex flex-wrap" id="modal-details-form" method="POST" action="{% url 'store:hire' %}">
+                    {% csrf_token %}
+                    <h4>Information for the Vendor to Contact you</h4>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="modal-username">Username</span>
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Email"
+                            aria-describedby="modal-username" name="username" value="{{user.user_name}}">
+                    </div>
+                
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="modal-email-address">Email</span>
+                        <input type="text" class="form-control" placeholder="Email" aria-label="Email"
+                            aria-describedby="modal-email-address" name="email-address" value="{{user.email}}">
+                    </div>
+                
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="modal-phone-number">Phone Number</span>
+                        <input type="text" class="form-control" placeholder="Phone number" aria-label="Phone number" name="phone-number"
+                            value="{{user.phone_number}}" aria-describedby="modal-phone-number" required>
+                    </div>
+                
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="modal-address">Address</span>
+                        <input type="text" class="form-control" placeholder="Address" aria-label="Address" name="address"
+                            value="{{user.address_line_1 }}" aria-describedby="modal-phone-number">
+                    </div>
+                
+                    <input type="hidden" name="service_id" id="service_id_input_hidden">
+                
+                    <small>Please be sure to enter valid details</small>
+                
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="modal-details-form" class="btn btn-primary">Hire</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+    var hire_request_modal = document.getElementById('hireRequestModal')
+    hire_request_modal.addEventListener('show.bs.modal', function (event) {
+        document.getElementById("service_id_input_hidden").value = event.relatedTarget.getAttribute('data-service');
+
+    })
+</script>
+{% endblock %}

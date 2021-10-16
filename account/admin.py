@@ -2,4 +2,8 @@ from django.contrib import admin
 
 from .models import UserBase
 
-admin.site.register(UserBase)
+
+@admin.register(UserBase)
+class UserBaseAdmin(admin.ModelAdmin):
+    list_display = ['email','user_name', 'is_staff', 'created', 'updated']
+

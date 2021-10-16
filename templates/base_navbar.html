@@ -34,7 +34,7 @@
                 {% endif %}
                 <li class="nav-item">
                     <!-- For total item in basket -->
-                    <a class="nav-link" style="color: #ffff;" aria-current="page" href="{% url 'basket:basket_summary' %}"><i class="fa fa-shopping-cart" style="font-size:24px"><sup id="basket-qty">{{basket_total}}</sup></i></a>
+                    <a class="nav-link" style="color: #ffff;" aria-current="page" href="{% url 'basket:basket_summary' %}"><i class="fas fa-shopping-cart" style="font-size:24px"><sup id="basket-qty">{{basket_total}}</sup></i></a>
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown">

@@ -22,7 +22,7 @@ class Category(models.Model):
 	name = models.CharField(max_length=255, db_index=True)
 	slug = models.SlugField(max_length=255, unique=True)
 	icon = models.CharField(max_length=255,
-		default='fa fa-list-alt', 
+		default='fas fa-list-alt', 
 		help_text='Font Awesome or Bootstrap class [https://fontawesome.com/v5.15/icons?d=gallery&p=2&m=free][https://icons.getbootstrap.com/](e.g, fa fa-shopping-cart)')
 	class Meta:
 		verbose_name_plural = 'categories'

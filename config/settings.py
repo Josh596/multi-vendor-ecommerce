@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import dj_database_url
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -90,8 +91,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd5g1f1ur0igb5q',
+        'HOST': 'ec2-3-221-100-217.compute-1.amazonaws.com',
+        'PORT': 5432,
+        'USER': 'tffrbaumfkodka',
+        'PASSWORD': 'ab14b9f1b139edd13f3af60439827d46acaeef644dd6004bfe2de23bff895ba9'
     }
 }
 
@@ -165,5 +170,5 @@ EMAIL_USE_TLS = True
 PAYSTACK_SECRET_KEY = os.environ.get('PAYSTACK_SECRET_KEY')
 PAYSTACK_PUBLIC_KEY = os.environ.get('PAYSTACK_PUBLIC_KEY')
 
-print(PAYSTACK_SECRET_KEY)
-print(PAYSTACK_PUBLIC_KEY)
+database_uri = os.environ.get('DATABASE_URL')
+DATABASES['default'] = dj_database_url.parse(database_uri,conn_max_age=600)

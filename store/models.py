@@ -45,7 +45,8 @@ class ServiceCategory(models.Model):
 	def get_absolute_url(self):
 		return reverse('store:service_category_list', args=[self.slug])
 
-
+	def __str__(self):
+		return self.name
 
 
 class Product(models.Model):
@@ -123,4 +124,7 @@ class ServiceRequests(models.Model):
 	phone_number = models.CharField(max_length=16)
 	email = models.EmailField()
 	created = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self) -> str:
+		return f"Request by {self.user.user_name} to {self.service.vendor.business_name}"
 	

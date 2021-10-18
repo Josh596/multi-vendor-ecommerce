@@ -11,7 +11,9 @@ basket/migrations/__pycache__/
 orders/migrations/__pycache__/
 payment/migrations/__pycache__/
 store/migrations/__pycache__/
-
+general/migrations/__pycache__/
 config/.env
 
 pypaystack/__pycache__/
+general/__pycache__/
+

@@ -4,7 +4,7 @@
 {% block title %}Log-in{% endblock %} {% block content %}
 
 <div class="d-flex justify-content-end container">
-    <form class="account-form p-5" style="width: 35%;" action="{% url 'account:login' %}" method="post">
+    <form class="account-form p-5" action="{% url 'account:login' %}" method="post">
         {% csrf_token %}
         <h3 class="mb-4">Sign In</h3>
         {% if form.errors %}

@@ -8,6 +8,7 @@ body {
     background: #EFE8FF;
     box-shadow: 2px 2px 2px rgb(0 0 0 / 25%);
     border-radius: 10px;
+    width: 35%;
 }
 
 .account-form input{
@@ -22,4 +23,14 @@ body {
 .account-form input:focus {
     border-color: #1497ff;
     box-shadow: none;
+}
+
+@media (max-width: 979px) {
+    .account-form{
+        width: 100%;
+    }
+
+    .item-card{
+        width: 100%;
+    }
 }

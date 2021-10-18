@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'vendor.apps.VendorConfig',
     'payment.apps.PaymentConfig',
-    'crispy_forms'
+    'general.apps.GeneralConfig',
+    'crispy_forms',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -140,7 +142,20 @@ USE_TZ = True
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+
+AWS_STORAGE_BUCKET_NAME = 'shopbeta1'
+AWS_S3_CUSTOM_DOMAIN = 'd1bbqrx6ln9oi7.cloudfront.net'
+
+AWS_LOCATION = 'static'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage' #the media storage configurations
+
+
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 

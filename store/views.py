@@ -45,7 +45,7 @@ def category_list(request, category_slug=None):
 def service_category_list(request, category_slug=None):
     category = get_object_or_404(ServiceCategory, slug=category_slug)
     service = Service.services.filter(categories=category)
-    return render(request, 'store/service_category_list.html', {'category': category, 'products': service})
+    return render(request, 'store/service_category_list.html', {'category': category, 'services': service})
 
 
 @require_POST

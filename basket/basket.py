@@ -18,6 +18,7 @@ class Basket():
         if settings.BASKET_SESSION_ID not in request.session:
             basket = self.session[settings.BASKET_SESSION_ID] = {}
         self.basket = basket
+        self.shipping = 200
 
 
     def add(self, product, qty):
@@ -73,7 +74,7 @@ class Basket():
 
         subtotal = sum(Decimal(item['price']) * item['qty'] for item in self.basket.values())
 
-        shipping = 0
+        shipping = self.shipping
 
         total = subtotal + Decimal(shipping)
         return total
